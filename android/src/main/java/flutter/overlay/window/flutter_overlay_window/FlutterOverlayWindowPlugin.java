@@ -60,7 +60,6 @@ public class FlutterOverlayWindowPlugin implements
                 "overlayMain");
         FlutterEngine engine = enn.createAndRunEngine(context, dEntry);
         FlutterEngineCache.getInstance().put(OverlayConstants.CACHED_TAG, engine);
-        binding.addActivityResultListener(this);
     }
 
     @Override
@@ -136,6 +135,13 @@ public class FlutterOverlayWindowPlugin implements
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
         mActivity = binding.getActivity();
+//        FlutterEngineGroup enn = new FlutterEngineGroup(context);
+//        DartExecutor.DartEntrypoint dEntry = new DartExecutor.DartEntrypoint(
+//                FlutterInjector.instance().flutterLoader().findAppBundlePath(),
+//                "overlayMain");
+//        FlutterEngine engine = enn.createAndRunEngine(context, dEntry);
+//        FlutterEngineCache.getInstance().put(OverlayConstants.CACHED_TAG, engine);
+        binding.addActivityResultListener(this);
     }
 
     @Override
