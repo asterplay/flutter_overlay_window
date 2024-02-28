@@ -54,12 +54,18 @@ public class FlutterOverlayWindowPlugin implements
         WindowSetup.messenger = messenger;
         WindowSetup.messenger.setMessageHandler(this);
 
-        FlutterEngineGroup enn = new FlutterEngineGroup(context);
-        DartExecutor.DartEntrypoint dEntry = new DartExecutor.DartEntrypoint(
-                FlutterInjector.instance().flutterLoader().findAppBundlePath(),
-                "overlayMain");
-        FlutterEngine engine = enn.createAndRunEngine(context, dEntry);
-        FlutterEngineCache.getInstance().put(OverlayConstants.CACHED_TAG, engine);
+//        FlutterEngineGroup enn = new FlutterEngineGroup(context);
+//        DartExecutor.DartEntrypoint dEntry = new DartExecutor.DartEntrypoint(
+//                FlutterInjector.instance().flutterLoader().findAppBundlePath(),
+//                "overlayMain");
+//        FlutterEngine engine = enn.createAndRunEngine(context, dEntry);
+//        FlutterEngineCache.getInstance().put(OverlayConstants.CACHED_TAG, engine);
+
+        FlutterEngine flutterEngine = new FlutterEngine(this);
+        flutterEngine.getDartExecutor().executeDartEntrypoint(
+                DartExecutor.DartEntrypoint.createDefault()
+        );
+        FlutterEngineCache.getInstance().put(OverlayConstants.CACHED_TAG, flutterEngine);
     }
 
     @Override
@@ -132,17 +138,17 @@ public class FlutterOverlayWindowPlugin implements
         WindowSetup.messenger.setMessageHandler(null);
     }
 
-    @Override
-    public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
-        mActivity = binding.getActivity();
-//        FlutterEngineGroup enn = new FlutterEngineGroup(context);
-//        DartExecutor.DartEntrypoint dEntry = new DartExecutor.DartEntrypoint(
-//                FlutterInjector.instance().flutterLoader().findAppBundlePath(),
-//                "overlayMain");
-//        FlutterEngine engine = enn.createAndRunEngine(context, dEntry);
-//        FlutterEngineCache.getInstance().put(OverlayConstants.CACHED_TAG, engine);
-        binding.addActivityResultListener(this);
-    }
+//    @Override
+//    public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+//        mActivity = binding.getActivity();
+////        FlutterEngineGroup enn = new FlutterEngineGroup(context);
+////        DartExecutor.DartEntrypoint dEntry = new DartExecutor.DartEntrypoint(
+////                FlutterInjector.instance().flutterLoader().findAppBundlePath(),
+////                "overlayMain");
+////        FlutterEngine engine = enn.createAndRunEngine(context, dEntry);
+////        FlutterEngineCache.getInstance().put(OverlayConstants.CACHED_TAG, engine);
+//        binding.addActivityResultListener(this);
+//    }
 
     @Override
     public void onDetachedFromActivityForConfigChanges() {
