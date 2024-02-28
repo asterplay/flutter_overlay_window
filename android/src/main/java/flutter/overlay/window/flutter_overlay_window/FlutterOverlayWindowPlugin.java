@@ -54,11 +54,11 @@ public class FlutterOverlayWindowPlugin implements
         WindowSetup.messenger = messenger;
         WindowSetup.messenger.setMessageHandler(this);
 
-        FlutterEngineGroup enn = new FlutterEngineGroup(this);
+        FlutterEngineGroup enn = new FlutterEngineGroup(this.context);
         DartExecutor.DartEntrypoint dEntry = new DartExecutor.DartEntrypoint(
                 FlutterInjector.instance().flutterLoader().findAppBundlePath(),
                 "overlayMain");
-        FlutterEngine engine = enn.createAndRunEngine(this, dEntry);
+        FlutterEngine engine = enn.createAndRunEngine(this.context, dEntry);
         FlutterEngineCache.getInstance().put(OverlayConstants.CACHED_TAG, engine);
     }
 
