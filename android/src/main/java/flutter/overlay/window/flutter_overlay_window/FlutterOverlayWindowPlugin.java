@@ -54,8 +54,15 @@ public class FlutterOverlayWindowPlugin implements
         WindowSetup.messenger = messenger;
         WindowSetup.messenger.setMessageHandler(this);
 
-        // 获取 Flutter 引擎实例
-        FlutterEngine engine = FlutterEngineManager.getInstance(context).getEngine();
+        // 创建 FlutterEngineGroup 实例
+        FlutterEngineGroup enn = new FlutterEngineGroup(context);
+        // 创建 DartEntrypoint 实例
+        DartExecutor.DartEntrypoint dEntry = new DartExecutor.DartEntrypoint(
+                FlutterInjector.instance().flutterLoader().findAppBundlePath(),
+                "overlayMain");
+        // 创建并运行 FlutterEngine 实例
+        FlutterEngine engine = enn.createAndRunEngine(context, dEntry);
+        // 将引擎添加到缓存
         FlutterEngineCache.getInstance().put(OverlayConstants.CACHED_TAG, engine);
     }
 
