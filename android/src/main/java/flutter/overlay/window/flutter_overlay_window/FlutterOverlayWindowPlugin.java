@@ -43,7 +43,7 @@ public class FlutterOverlayWindowPlugin implements
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-        this.context = flutterPluginBinding.getFlutterEngine().getDartExecutor().getApplicationContext();
+        this.context = flutterPluginBinding.getApplicationContext();
         channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), OverlayConstants.CHANNEL_TAG);
         channel.setMethodCallHandler(this);
 
