@@ -48,18 +48,18 @@ public class FlutterOverlayWindowPlugin implements
         this.context = flutterPluginBinding.getApplicationContext();
         Log.d("FlutterOverlayWindow", "onAttachedToEngine: Context obtained");
 
-        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), OverlayConstants.CHANNEL_TAG);
-        channel.setMethodCallHandler(this);
-        Log.d("FlutterOverlayWindow", "onAttachedToEngine: MethodChannel created");
+//        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), OverlayConstants.CHANNEL_TAG);
+//        channel.setMethodCallHandler(this);
+//        Log.d("FlutterOverlayWindow", "onAttachedToEngine: MethodChannel created");
+//
+//        messenger = new BasicMessageChannel(flutterPluginBinding.getBinaryMessenger(), OverlayConstants.MESSENGER_TAG,
+//                JSONMessageCodec.INSTANCE);
+//        messenger.setMessageHandler(this);
+//        Log.d("FlutterOverlayWindow", "onAttachedToEngine: BasicMessageChannel created");
 
-        messenger = new BasicMessageChannel(flutterPluginBinding.getBinaryMessenger(), OverlayConstants.MESSENGER_TAG,
-                JSONMessageCodec.INSTANCE);
-        messenger.setMessageHandler(this);
-        Log.d("FlutterOverlayWindow", "onAttachedToEngine: BasicMessageChannel created");
-
-        WindowSetup.messenger = messenger;
-        WindowSetup.messenger.setMessageHandler(this);
-        Log.d("FlutterOverlayWindow", "onAttachedToEngine: Messenger setup");
+//        WindowSetup.messenger = messenger;
+//        WindowSetup.messenger.setMessageHandler(this);
+//        Log.d("FlutterOverlayWindow", "onAttachedToEngine: Messenger setup");
 
         // 创建 FlutterEngineGroup 实例
         FlutterEngineGroup enn = new FlutterEngineGroup(context);
@@ -72,22 +72,12 @@ public class FlutterOverlayWindowPlugin implements
         Log.d("FlutterOverlayWindow", "onAttachedToEngine: DartEntrypoint created");
 
         // 创建并运行 FlutterEngine 实例
-        try {
-            // 创建并运行 FlutterEngine 实例
-            FlutterEngine engine = enn.createAndRunEngine(context, dEntry);
-            Log.d("FlutterOverlayWindow", "onAttachedToEngine: FlutterEngine created and running");
-            // 将引擎添加到缓存
-
-            Log.d("FlutterOverlayWindow", "onAttachedToEngine: Engine cached");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-//        FlutterEngine engine = enn.createAndRunEngine(context, dEntry);
-
+        FlutterEngine engine = enn.createAndRunEngine(context, dEntry);
+        Log.d("FlutterOverlayWindow", "onAttachedToEngine: FlutterEngine created and running");
 
         // 将引擎添加到缓存
-//        FlutterEngineCache.getInstance().put(OverlayConstants.CACHED_TAG, engine);
-
+        FlutterEngineCache.getInstance().put(OverlayConstants.CACHED_TAG, engine);
+        Log.d("FlutterOverlayWindow", "onAttachedToEngine: Engine cached");
     }
 
     @Override
