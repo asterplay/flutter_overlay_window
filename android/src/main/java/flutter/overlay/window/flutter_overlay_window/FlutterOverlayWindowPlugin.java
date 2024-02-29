@@ -43,7 +43,7 @@ public class FlutterOverlayWindowPlugin implements
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-        this.context = flutterPluginBinding.getApplicationContext();
+        this.context = flutterPluginBinding.getFlutterEngine().getDartExecutor().getApplicationContext();
         channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), OverlayConstants.CHANNEL_TAG);
         channel.setMethodCallHandler(this);
 
@@ -54,17 +54,9 @@ public class FlutterOverlayWindowPlugin implements
         WindowSetup.messenger = messenger;
         WindowSetup.messenger.setMessageHandler(this);
 
-        // 创建 FlutterEngineGroup 实例
-        FlutterEngineGroup enn = new FlutterEngineGroup(context);
-        // 创建 DartEntrypoint 实例
-        DartExecutor.DartEntrypoint dEntry = new DartExecutor.DartEntrypoint(
-                FlutterInjector.instance().flutterLoader().findAppBundlePath(),
-                "overlayMain");
-        // 创建并运行 FlutterEngine 实例
-        FlutterEngine engine = enn.createAndRunEngine(context, dEntry);
-        // 将引擎添加到缓存
+        // 获取 Flutter 引擎实例
+        FlutterEngine engine = FlutterEngineManager.getInstance(context).getEngine();
         FlutterEngineCache.getInstance().put(OverlayConstants.CACHED_TAG, engine);
-
     }
 
     @Override
@@ -164,10 +156,12 @@ public class FlutterOverlayWindowPlugin implements
 
     @Override
     public void onMessage(@Nullable Object message, @NonNull BasicMessageChannel.Reply reply) {
+
         BasicMessageChannel overlayMessageChannel = new BasicMessageChannel(
                 FlutterEngineCache.getInstance().get(OverlayConstants.CACHED_TAG)
                         .getDartExecutor(),
                 OverlayConstants.MESSENGER_TAG, JSONMessageCodec.INSTANCE);
+
         overlayMessageChannel.send(message, reply);
     }
 
