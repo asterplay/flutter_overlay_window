@@ -115,7 +115,7 @@ public class OverlayService extends Service implements View.OnTouchListener {
         flutterChannel.setMethodCallHandler((call, result) -> {
             if (call.method.equals("updateFlag")) {
                 String flag = call.argument("flag").toString();
-                updateOverlayFlag(result, flag);
+                updateOverlayFlag(result, flag);gg
             } else if (call.method.equals("resizeOverlay")) {
                 int width = call.argument("width");
                 int height = call.argument("height");

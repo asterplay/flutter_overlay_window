@@ -41,6 +41,45 @@ public class FlutterOverlayWindowPlugin implements
     private Result pendingResult;
     final int REQUEST_CODE_FOR_OVERLAY_PERMISSION = 1248;
 
+//    @Override
+//    public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+//        Log.d("FlutterOverlayWindow", "onAttachedToEngine: Start");
+//
+//        this.context = flutterPluginBinding.getApplicationContext();
+//        Log.d("FlutterOverlayWindow", "onAttachedToEngine: Context obtained");
+//
+////        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), OverlayConstants.CHANNEL_TAG);
+////        channel.setMethodCallHandler(this);
+////        Log.d("FlutterOverlayWindow", "onAttachedToEngine: MethodChannel created");
+////
+////        messenger = new BasicMessageChannel(flutterPluginBinding.getBinaryMessenger(), OverlayConstants.MESSENGER_TAG,
+////                JSONMessageCodec.INSTANCE);
+////        messenger.setMessageHandler(this);
+////        Log.d("FlutterOverlayWindow", "onAttachedToEngine: BasicMessageChannel created");
+//
+////        WindowSetup.messenger = messenger;
+////        WindowSetup.messenger.setMessageHandler(this);
+////        Log.d("FlutterOverlayWindow", "onAttachedToEngine: Messenger setup");
+//
+//        // 创建 FlutterEngineGroup 实例
+//        FlutterEngineGroup enn = new FlutterEngineGroup(context);
+//        Log.d("FlutterOverlayWindow", "onAttachedToEngine: FlutterEngineGroup created");
+//
+//        // 创建 DartEntrypoint 实例
+//        DartExecutor.DartEntrypoint dEntry = new DartExecutor.DartEntrypoint(
+//                FlutterInjector.instance().flutterLoader().findAppBundlePath(),
+//                "overlayMain");
+//        Log.d("FlutterOverlayWindow", "onAttachedToEngine: DartEntrypoint created");
+//
+//        // 创建并运行 FlutterEngine 实例
+//        FlutterEngine engine = enn.createAndRunEngine(context, dEntry);
+//        Log.d("FlutterOverlayWindow", "onAttachedToEngine: FlutterEngine created and running");
+//
+//        // 将引擎添加到缓存
+//        FlutterEngineCache.getInstance().put(OverlayConstants.CACHED_TAG, engine);
+//        Log.d("FlutterOverlayWindow", "onAttachedToEngine: Engine cached");
+//    }
+
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         Log.d("FlutterOverlayWindow", "onAttachedToEngine: Start");
@@ -48,37 +87,30 @@ public class FlutterOverlayWindowPlugin implements
         this.context = flutterPluginBinding.getApplicationContext();
         Log.d("FlutterOverlayWindow", "onAttachedToEngine: Context obtained");
 
-//        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), OverlayConstants.CHANNEL_TAG);
-//        channel.setMethodCallHandler(this);
-//        Log.d("FlutterOverlayWindow", "onAttachedToEngine: MethodChannel created");
-//
-//        messenger = new BasicMessageChannel(flutterPluginBinding.getBinaryMessenger(), OverlayConstants.MESSENGER_TAG,
-//                JSONMessageCodec.INSTANCE);
-//        messenger.setMessageHandler(this);
-//        Log.d("FlutterOverlayWindow", "onAttachedToEngine: BasicMessageChannel created");
-
-//        WindowSetup.messenger = messenger;
-//        WindowSetup.messenger.setMessageHandler(this);
-//        Log.d("FlutterOverlayWindow", "onAttachedToEngine: Messenger setup");
-
         // 创建 FlutterEngineGroup 实例
-        FlutterEngineGroup enn = new FlutterEngineGroup(context);
-        Log.d("FlutterOverlayWindow", "onAttachedToEngine: FlutterEngineGroup created");
+        try {
+            FlutterEngineGroup enn = new FlutterEngineGroup(context);
+            Log.d("FlutterOverlayWindow", "onAttachedToEngine: FlutterEngineGroup created");
 
-        // 创建 DartEntrypoint 实例
-        DartExecutor.DartEntrypoint dEntry = new DartExecutor.DartEntrypoint(
-                FlutterInjector.instance().flutterLoader().findAppBundlePath(),
-                "overlayMain");
-        Log.d("FlutterOverlayWindow", "onAttachedToEngine: DartEntrypoint created");
+            // 创建 DartEntrypoint 实例
+            DartExecutor.DartEntrypoint dEntry = new DartExecutor.DartEntrypoint(
+                    FlutterInjector.instance().flutterLoader().findAppBundlePath(),
+                    "overlayMain");
+            Log.d("FlutterOverlayWindow", "onAttachedToEngine: DartEntrypoint created");
 
-        // 创建并运行 FlutterEngine 实例
-        FlutterEngine engine = enn.createAndRunEngine(context, dEntry);
-        Log.d("FlutterOverlayWindow", "onAttachedToEngine: FlutterEngine created and running");
+            // 创建并运行 FlutterEngine 实例
+            FlutterEngine engine = enn.createAndRunEngine(context, dEntry);
+            Log.d("FlutterOverlayWindow", "onAttachedToEngine: FlutterEngine created and running");
 
-        // 将引擎添加到缓存
-        FlutterEngineCache.getInstance().put(OverlayConstants.CACHED_TAG, engine);
-        Log.d("FlutterOverlayWindow", "onAttachedToEngine: Engine cached");
+            // 将引擎添加到缓存
+            FlutterEngineCache.getInstance().put(OverlayConstants.CACHED_TAG, engine);
+            Log.d("FlutterOverlayWindow", "onAttachedToEngine: Engine cached");
+        } catch (Exception e) {
+            Log.e("FlutterOverlayWindow", "onAttachedToEngine: Exception occurred: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
